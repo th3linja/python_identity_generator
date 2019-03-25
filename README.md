@@ -33,5 +33,7 @@ th3linja
 
 ## Acknowledgements
 Thank you authors of `BeautifulSoup` and `requests`.
-[BeautifulSoup](https://www.crummy.com/software/BeautifulSoup/)
-[requests](http://docs.python-requests.org/en/master/)
+
+* [BeautifulSoup](https://www.crummy.com/software/BeautifulSoup/)
+
+* [requests](http://docs.python-requests.org/en/master/)
