@@ -21,7 +21,8 @@ There are quite a few issues in regards to using `request` and `BeautifulSoup` o
 1. Should the site go down, the script is invalid.
 2. Should any information generated from another site go down, the script is **partially** invalid. (Most of the data is generated off other sites).
 3. Should you not have internet, the script is invalid.
-4. The code sucks. Deal with it, it's a work in progress.
+4. Should you encounter a captcha, the script is invalid.
+5. The code sucks. Deal with it, it's a work in progress.
 
 ## Future Improvements
 * I might consider creating an identity file with stored information so this script works offline as well. (But why...?)
