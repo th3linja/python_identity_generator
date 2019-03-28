@@ -2,67 +2,60 @@ from bs4 import BeautifulSoup
 import requests
 
 
-def strip_value(str):
-    if ('value="') in str:
-        text_beg = str.index('value="') + 7
-        text_end = str.index('"/></div>')
-        str = str[text_beg:text_end]
-        return str
-    if ('<p>') in str:
-        text_beg = str.index('<p>') + 3
-        text_end = str.index('</p>')
-        str = str[text_beg:text_end]
-        return str
-    return str
-
-
-person_data = {}
-
-url = 'https://www.fakepersongenerator.com/Index/generate'
-req = requests.post(url)
-page = requests.get(req.url)
-
-soup = BeautifulSoup(page.content, 'html.parser')
-category = soup.select('.info-title')
-
-name_raw = soup.select('.click')
-data_raw = str(soup.select('.col-md-8'))
-data2 = soup.select('.info-detail')
-
-index = data_raw.find('<p')                             # index for parsing data_raw
-
-name = name_raw[0].string.strip()
-data_main = []
-data_main_val = []
-
-while index != -1:
-    iterator = 1
-    index2 = data_raw.find('<p', index + iterator)
-    build_string = data_raw[index + 3: index2 - 4]
-    data_main.append(build_string)
-    index = index2
-    iterator += 1
-
-for a in range(len(data_main)):
-    data_main[a] = data_main[a].replace('<b>', '')
-    data_main[a] = data_main[a].replace('</b>', '')
-    data_main[a] = data_main[a].replace('title="test">', '')
-    data_main_val.append(data_main[a][data_main[a].index(':') + 2 :])
-    data_main[a] = data_main[a][:data_main[a].index(':')]
-    person_data[data_main[a]] = data_main_val[a]
-
-
-for b in range(len(data2)):
-    category[b] = category[b].string.strip()
-    data2[b] = strip_value(str(data2[b]))
-    data2[b] = data2[b].replace('&lt;', '<')
-    data2[b] = data2[b].replace('<br/>', '\n\t\t')
-    data2[b] = data2[b].replace('&quot;', '"')
-    person_data[category[b]] = data2[b]
-
-
 class Person(object):
     def __init__(self):
+        def strip_value(str):
+            if ('value="') in str:
+                text_beg = str.index('value="') + 7
+                text_end = str.index('"/></div>')
+                str = str[text_beg:text_end]
+                return str
+            if ('<p>') in str:
+                text_beg = str.index('<p>') + 3
+                text_end = str.index('</p>')
+                str = str[text_beg:text_end]
+                return str
+            return str
+
+        person_data = {}
+
+        url = 'https://www.fakepersongenerator.com/Index/generate'
+        req = requests.post(url)
+        page = requests.get(req.url)
+
+        soup = BeautifulSoup(page.content, 'html.parser')
+        category = soup.select('.info-title')
+
+        name_raw = soup.select('.click')
+        data_raw = str(soup.select('.col-md-8'))
+        data2 = soup.select('.info-detail')
+
+        index = data_raw.find('<p')  # index for parsing data_raw
+
+        name = name_raw[0].string.strip()
+        data_main = []
+        data_main_val = []
+
+        while index != -1:
+            iterator = 1
+            index2 = data_raw.find('<p', index + iterator)
+            build_string = data_raw[index + 3: index2 - 4]
+            data_main.append(build_string)
+            index = index2
+            iterator += 1
+
+        for a in range(len(data_main)):
+            data_main[a] = data_main[a].replace('<b>', '').replace('</b>', '').replace('title="test">', '')
+            data_main_val.append(data_main[a][data_main[a].index(':') + 2:])
+            data_main[a] = data_main[a][:data_main[a].index(':')]
+            person_data[data_main[a]] = data_main_val[a]
+
+        for b in range(len(data2)):
+            category[b] = category[b].string.strip()
+            data2[b] = strip_value(str(data2[b]))
+            data2[b] = data2[b].replace('&lt;', '<').replace('<br/>', '\n\t\t').replace('&quot;', '"')
+            person_data[category[b]] = data2[b]
+
         self.name = name
         self.gender = person_data.get('Gender)')
         self.race = person_data.get('Race')
@@ -149,6 +142,3 @@ class Person(object):
         self.ups_tracking = person_data.get("UPS Tracking Number")
         self.country = person_data.get("Country")
         self.country_code = person_data.get("Country Code")
-
-person = Person()
-print(person.name)
