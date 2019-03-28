@@ -16,12 +16,17 @@ If you do not have `requests` or `BeautifulSoup`, run `pip3 install requests` an
 
 Download the script from the repository and run.
 
+## Running the Program
+When you initially run the program, the program just spits out a random generated name off of the site [https://www.fakepersongenerator.com/](https//www.fakepersongenerator.com/). If you want to see the all of the generated data, you can pass a loop through the dictionary `person_data` to print a list of all of the data scraped off of the site. Otherwise, you can create multiple print statements through the object to get specific data.
+
 ## Issues
 There are quite a few issues in regards to using `request` and `BeautifulSoup` on [https://www.fakepersongenerator.com/](https//www.fakepersongenerator.com/).
 1. Should the site go down, the script is invalid.
 2. Should any information generated from another site go down, the script is **partially** invalid. (Most of the data is generated off other sites).
 3. Should you not have internet, the script is invalid.
-4. The code sucks. Deal with it, it's a work in progress.
+4. Should you encounter a captcha, the script is invalid.
+5. A new person is generated every time the code is ran - even if stored as a variable.
+5. The code sucks. Deal with it, it's a work in progress.
 
 ## Future Improvements
 * I might consider creating an identity file with stored information so this script works offline as well. (But why...?)
